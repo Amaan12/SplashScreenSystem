@@ -1,0 +1,31 @@
+{
+  "name": "com.amaan.splashscreensystem",
+  "version": "1.0.0",
+  "displayName": "SplashScreenSystem",
+  "description": "A modular, asynchronous splash screen sequencer and tween transition system for Unity utilizing UniTask and DOTween.",
+  "unity": "2021.3",
+  "unityRelease": "0f1",
+  "keywords": [
+    "splash",
+    "splashscreen",
+    "sequencer",
+    "tween",
+    "dotween",
+    "unitask",
+    "ui"
+  ],
+  "author": {
+    "name": "Amaan",
+    "url": "https://github.com/Amaan12"
+  },
+  "dependencies": {
+    "com.unity.ugui": "1.0.0"
+  },
+  "samples": [
+    {
+      "displayName": "Demo",
+      "description": "Demo splash screen scene, profile, and prefabs showcasing the sequencer and tween animations.",
+      "path": "Samples~/Demo"
+    }
+  ]
+}
