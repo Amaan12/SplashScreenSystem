@@ -72,7 +72,8 @@ namespace SplashScreenSystem
 
             fadeTween?.Kill();
             canvasGroup.alpha = startAlpha;
-            fadeTween = canvasGroup.DOFade(endAlpha, enterDuration)
+            fadeTween = DOTween.To(() => canvasGroup.alpha, x => canvasGroup.alpha = x, endAlpha, enterDuration)
+                .SetTarget(canvasGroup)
                 .SetEase(enterEase)
                 .SetUpdate(true);
         }
@@ -89,7 +90,8 @@ namespace SplashScreenSystem
 
             fadeTween?.Kill();
             canvasGroup.alpha = endAlpha;
-            fadeTween = canvasGroup.DOFade(exitEndAlpha, exitDuration)
+            fadeTween = DOTween.To(() => canvasGroup.alpha, x => canvasGroup.alpha = x, exitEndAlpha, exitDuration)
+                .SetTarget(canvasGroup)
                 .SetEase(exitEase)
                 .SetUpdate(true);
         }
