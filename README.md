@@ -31,6 +31,8 @@ A lightweight, asynchronous splash screen sequencing system for Unity powered by
 
 ## Importing the Sample
 
+> **Note**: The samples require [AudioSystem]() (*TODO*).
+
 1. In the **Package Manager**, select **SplashScreenSystem**.
 2. Expand the **Samples** section.
 3. Click **Import** next to **Demo**.
