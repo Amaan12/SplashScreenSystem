@@ -3,7 +3,7 @@
     "rootNamespace": "SplashScreenSystem",
     "references": [
         "UniTask",
-        "DOTween.Modules"
+        "LitMotion"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

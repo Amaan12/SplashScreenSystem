@@ -1,6 +1,6 @@
 # SplashScreenSystem
 
-A lightweight, asynchronous splash screen sequencing system for Unity powered by **UniTask** and **DOTween**.
+A lightweight, asynchronous splash screen sequencing system for Unity powered by **UniTask** and **LitMotion**.
 
 ## Features
 
@@ -13,9 +13,7 @@ A lightweight, asynchronous splash screen sequencing system for Unity powered by
 ## Prerequisites
 
 - **[UniTask](https://github.com/Cysharp/UniTask)** (`com.cysharp.unitask` >= 2.0.0)
-- **[DOTween](https://dotween.demigiant.com/)** (Demigiant)
-
-> **Note**: Ensure DOTween has generated its assembly definition (`Tools > Demigiant > DOTween Utility Panel > Create ASMDEF`).
+- **[LitMotion](https://github.com/AnnulusGames/LitMotion)** (`com.annulusgames.litmotion`)
 
 ## Installation
 

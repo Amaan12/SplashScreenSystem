@@ -1,5 +1,5 @@
 using UnityEngine;
-using DG.Tweening;
+using LitMotion;
 
 namespace SplashScreenSystem
 {
@@ -33,7 +33,7 @@ namespace SplashScreenSystem
         [SerializeField] [Tooltip("Alpha value to end fading out at.")] 
         float exitEndAlpha = 0f;
 
-        Tween fadeTween;
+        MotionHandle fadeTween;
 
         public CanvasGroup CanvasGroup => canvasGroup;
         public float EnterDurationParam => enterDuration;
@@ -57,7 +57,7 @@ namespace SplashScreenSystem
 
         void OnDestroy()
         {
-            fadeTween?.Kill();
+            if (fadeTween.IsActive()) fadeTween.Cancel();
         }
 
         /// <summary>
@@ -70,12 +70,12 @@ namespace SplashScreenSystem
                 return;
             }
 
-            fadeTween?.Kill();
+            if (fadeTween.IsActive()) fadeTween.Cancel();
             canvasGroup.alpha = startAlpha;
-            fadeTween = DOTween.To(() => canvasGroup.alpha, x => canvasGroup.alpha = x, endAlpha, enterDuration)
-                .SetTarget(canvasGroup)
-                .SetEase(enterEase)
-                .SetUpdate(true);
+            fadeTween = LMotion.Create(canvasGroup.alpha, endAlpha, enterDuration)
+                .WithEase(enterEase)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
+                .Bind(x => canvasGroup.alpha = x);
         }
 
         /// <summary>
@@ -88,12 +88,12 @@ namespace SplashScreenSystem
                 return;
             }
 
-            fadeTween?.Kill();
+            if (fadeTween.IsActive()) fadeTween.Cancel();
             canvasGroup.alpha = endAlpha;
-            fadeTween = DOTween.To(() => canvasGroup.alpha, x => canvasGroup.alpha = x, exitEndAlpha, exitDuration)
-                .SetTarget(canvasGroup)
-                .SetEase(exitEase)
-                .SetUpdate(true);
+            fadeTween = LMotion.Create(canvasGroup.alpha, exitEndAlpha, exitDuration)
+                .WithEase(exitEase)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
+                .Bind(x => canvasGroup.alpha = x);
         }
     }
 }

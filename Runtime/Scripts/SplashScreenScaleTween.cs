@@ -1,5 +1,5 @@
 using UnityEngine;
-using DG.Tweening;
+using LitMotion;
 
 namespace SplashScreenSystem
 {
@@ -33,7 +33,7 @@ namespace SplashScreenSystem
         [SerializeField] [Tooltip("Scale vector to end scaling out at.")] 
         Vector3 exitEndScale = Vector3.zero;
 
-        Tween scaleTween;
+        MotionHandle scaleTween;
 
         public RectTransform RectTransform => rectTransform;
         public float EnterDurationParam => enterDuration;
@@ -57,7 +57,7 @@ namespace SplashScreenSystem
 
         void OnDestroy()
         {
-            scaleTween?.Kill();
+            if (scaleTween.IsActive()) scaleTween.Cancel();
         }
 
         /// <summary>
@@ -70,11 +70,12 @@ namespace SplashScreenSystem
                 return;
             }
 
-            scaleTween?.Kill();
+            if (scaleTween.IsActive()) scaleTween.Cancel();
             rectTransform.localScale = startScale;
-            scaleTween = rectTransform.DOScale(endScale, enterDuration)
-                .SetEase(enterEase)
-                .SetUpdate(true);
+            scaleTween = LMotion.Create(rectTransform.localScale, endScale, enterDuration)
+                .WithEase(enterEase)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
+                .Bind(x => rectTransform.localScale = x);
         }
 
         /// <summary>
@@ -87,11 +88,12 @@ namespace SplashScreenSystem
                 return;
             }
 
-            scaleTween?.Kill();
+            if (scaleTween.IsActive()) scaleTween.Cancel();
             rectTransform.localScale = endScale;
-            scaleTween = rectTransform.DOScale(exitEndScale, exitDuration)
-                .SetEase(exitEase)
-                .SetUpdate(true);
+            scaleTween = LMotion.Create(rectTransform.localScale, exitEndScale, exitDuration)
+                .WithEase(exitEase)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
+                .Bind(x => rectTransform.localScale = x);
         }
     }
 }

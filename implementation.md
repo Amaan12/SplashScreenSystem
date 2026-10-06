@@ -70,7 +70,7 @@ Abstract foundation for all splash animations.
 
 ### 2.3 `SplashScreenFadeTween`
 
-Fades a `CanvasGroup` alpha in and out using DOTween.
+Fades a `CanvasGroup` alpha in and out using LitMotion.
 
 - **Namespace**: `SplashScreenSystem`
 - **Inherits**: `SplashScreenTween`
@@ -91,7 +91,7 @@ Fades a `CanvasGroup` alpha in and out using DOTween.
 
 ### 2.4 `SplashScreenScaleTween`
 
-Scales a `RectTransform` in and out using DOTween.
+Scales a `RectTransform` in and out using LitMotion.
 
 - **Namespace**: `SplashScreenSystem`
 - **Inherits**: `SplashScreenTween`
@@ -165,7 +165,7 @@ You can create custom animations (such as position slides or rotations) by deriv
 
 ```csharp
 using UnityEngine;
-using DG.Tweening;
+using LitMotion;
 using SplashScreenSystem;
 
 public class SplashScreenSlideTween : SplashScreenTween
@@ -179,7 +179,7 @@ public class SplashScreenSlideTween : SplashScreenTween
     [SerializeField] Ease enterEase = Ease.OutCubic;
     [SerializeField] Ease exitEase = Ease.InCubic;
 
-    Tween slideTween;
+    MotionHandle slideTween;
 
     public override float EnterDuration => enterDuration;
     public override float ExitDuration => exitDuration;
@@ -192,24 +192,26 @@ public class SplashScreenSlideTween : SplashScreenTween
 
     void OnDestroy()
     {
-        slideTween?.Kill();
+        if (slideTween.IsActive()) slideTween.Cancel();
     }
 
     public override void PlayEnter()
     {
-        slideTween?.Kill();
+        if (slideTween.IsActive()) slideTween.Cancel();
         rectTransform.anchoredPosition = startOffset;
-        slideTween = rectTransform.DOAnchorPos(endPosition, enterDuration)
-            .SetEase(enterEase)
-            .SetUpdate(true);
+        slideTween = LMotion.Create(rectTransform.anchoredPosition, endPosition, enterDuration)
+            .WithEase(enterEase)
+            .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
+            .Bind(x => rectTransform.anchoredPosition = x);
     }
 
     public override void PlayExit()
     {
-        slideTween?.Kill();
-        slideTween = rectTransform.DOAnchorPos(exitOffset, exitDuration)
-            .SetEase(exitEase)
-            .SetUpdate(true);
+        if (slideTween.IsActive()) slideTween.Cancel();
+        slideTween = LMotion.Create(rectTransform.anchoredPosition, exitOffset, exitDuration)
+            .WithEase(exitEase)
+            .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
+            .Bind(x => rectTransform.anchoredPosition = x);
     }
 }
 ```
@@ -220,11 +222,13 @@ Because `SplashScreenSequencer` automatically detects all `SplashScreenTween` co
 
 ## 6. Dependency Setup & Troubleshooting
 
-### DOTween Assembly Reference
-If you encounter compilation errors stating `The type or namespace name 'DG' could not be found`:
-1. Ensure DOTween is imported in your project.
-2. Open **Tools > Demigiant > DOTween Utility Panel**.
-3. Click **Create ASMDEF** to generate `DOTween.Modules.asmdef`.
+### LitMotion
+If `LitMotion` is missing:
+1. Open Package Manager > **Add package from git URL...**
+2. Enter:
+   ```text
+   https://github.com/AnnulusGames/LitMotion.git?path=src/LitMotion/Assets/LitMotion
+   ```
 
 ### UniTask
 If `Cysharp.Threading.Tasks` is missing:

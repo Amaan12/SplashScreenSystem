@@ -2,7 +2,7 @@
   "name": "com.amaan.splashscreensystem",
   "version": "1.0.0",
   "displayName": "SplashScreenSystem",
-  "description": "A modular, asynchronous splash screen sequencer and tween transition system for Unity utilizing UniTask and DOTween.",
+  "description": "A modular, asynchronous splash screen sequencer and tween transition system for Unity utilizing UniTask and LitMotion.",
   "unity": "2021.3",
   "unityRelease": "0f1",
   "keywords": [
@@ -10,7 +10,7 @@
     "splashscreen",
     "sequencer",
     "tween",
-    "dotween",
+    "litmotion",
     "unitask",
     "ui"
   ],
